@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artist Insights</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        .followers-count {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        #popularityGauge {
+            width: 250px !important;
+            height: 250px !important;
+        }
+
+        .gauge-label {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .gauge-description {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #555;
+            max-width: 250px;
+            margin: 0 auto;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2>Top Tracks for Artist Name</h2>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <canvas id="topTracksChart" style="max-width: 100%;"></canvas>
+            </div>
+
+            <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
+                <canvas id="popularityGauge"></canvas>
+                <div class="gauge-label">Artist Popularity</div>
+                <div class="gauge-description">The popularity of the artist. The value will be between 0 and 100, with
+                    100 being the most popular. The artist's popularity is calculated from the popularity of all the
+                    artist's tracks.</div>
+            </div>
+        </div>
+
+        <div class="followers-count">
+            <strong>Followers:</strong> 12345
+        </div>
+
+        <div class="container mt-5">
+            <h2>Album Releases by Year</h2>
+            <canvas id="albumReleaseChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        const topTracksData = [20, 30, 40, 50, 60];
+        const topTracksLabels = ["Track 1", "Track 2", "Track 3", "Track 4", "Track 5"];
+
+        new Chart(document.getElementById("topTracksChart"), {
+            type: "bar",
+            data: {
+                labels: topTracksLabels,
+                datasets: [{
+                    label: "Popularity",
+                    data: topTracksData,
+                    backgroundColor: "rgba(75, 192, 192, 0.6)",
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: "top"
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById("popularityGauge"), {
+            type: "doughnut",
+            data: {
+                labels: ["Popularity", "Remaining"],
+                datasets: [{
+                    data: [75, 25],
+                    backgroundColor: ["#4CAF50", "#e0e0e0"],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: false,
+                rotation: -90,
+                circumference: 180,
+                cutout: "70%",
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        const years = [2015, 2016, 2017, 2018, 2019];
+        const albumCounts = [2, 3, 4, 5, 6];
+
+        new Chart(document.getElementById("albumReleaseChart"), {
+            type: "line",
+            data: {
+                labels: years,
+                datasets: [{
+                    label: "Albums Released",
+                    data: albumCounts,
+                    backgroundColor: "rgba(75, 192, 192, 0.6)",
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    borderWidth: 1,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: "Number of Albums"
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: "Year"
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: "top"
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
